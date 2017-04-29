@@ -1,12 +1,12 @@
 library(plyr)
 
 # 0. Downloading dataset
-if(!file.exists("./data")){dir.create("./data")}
-fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-download.file(fileUrl,destfile="./data/Dataset.zip")
+if(!file.exists("./zipFile")){dir.create("./zipFile")}
+url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
+download.file(url,destfile="./zipFile/Dataset.zip")
 
 # Unzip dataSet to /data directory
-unzip(zipfile="./data/Dataset.zip",exdir="./data")
+unzip(zipfile="./zipFile/Dataset.zip",exdir="./zipFile")
 
 
 # 1. Merging the training and the test sets to create one data set:
@@ -43,12 +43,12 @@ colnames(activityLabels) <- c('activityID','activityType')
 # 1.3 Merging all data in one set:
 mrg_train <- cbind(y_train, subject_train, x_train)
 mrg_test <- cbind(y_test, subject_test, x_test)
-setAllInOne <- rbind(mrg_train, mrg_test)
+all_activity <- rbind(mrg_train, mrg_test)
 
 # 2. Extracting only the measurements on the mean and standard deviation for each measurement
 
 # 2.1 Reading column names:
-colNames <- colnames(setAllInOne)
+colNames <- colnames(all_activity)
 
 # 2.2 Create vector for defining ID, mean and standard deviation:
 mean_and_std <- (grepl("activityID" , colNames) | 
@@ -58,7 +58,7 @@ mean_and_std <- (grepl("activityID" , colNames) |
 )
 
 # 2.3 Making nessesary subset from setAllInOne:
-setForMeanAndStd <- setAllInOne[ , mean_and_std == TRUE]
+setForMeanAndStd <- all_activity[ , mean_and_std == TRUE]
 
 # 3. Using descriptive activity names to name the activities in the data set:
 setWithActivityNames <- merge(setForMeanAndStd, activityLabels,
