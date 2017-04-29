@@ -6,7 +6,7 @@ url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR
 download.file(url,destfile="./zipFile/Dataset.zip")
 
 # Unzip dataSet to /data directory
-unzip(zipfile="./zipFile/Dataset.zip",exdir="./zipFile")
+unzip(zipfile="./zipFile/Dataset.zip", exdir="./zipFile")
 
 
 # 1. Merging the training and the test sets to create one data set:
